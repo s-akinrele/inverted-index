@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="inverted-index">
+<head>
+<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <title></title>
+</head>
+<body >
+<div class="container">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Inverted-Index</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="row">
+<div class="col-lg-12" ng-controller="UploadFileController as files">
+<div class="col-lg-4" >
+<form id='uploadForm' role="form" method="POST" action="" encType="multipart/form-data">
+  <div class="form-group">
+    <label for="file">Please Select File</label>
+      <input id="fileupload" uploadfile ng-model="files.fileObject" name="fileupload" type="file" accept=".json"/>
+ </div>
+       <!--<button type="submit" class="btn upload" id="upload" name="upload">Upload File</button> -->
+</form>
+
+<div class="viewfile main-box">
+  <div ng-repeat="filename in files.fileNames track by $index">
+    <label class="uploads" id="filename">{{filename}}</label>
+    <button type="submit" class="btn index"  ng-click="files.createIndex($index)" name="create-index">Create index</button>
+  </div>
+</div>
+</div>
+<div class="col-lg-4 main-box text">
+<div class="index-created"></div>
+<table class="text" ng-repeat="(key,value) in files.indices track by $index" style="empty-cells:show; border: 1px solid black">
+<p>{{key}}</p>
+   <thead>
+     <tr>
+      <th>Words</th>
+     <th ng-repeat="file in files.files[$index] track by $index">Doc {{$index}}</th>
+     </tr>
+   </thead>
+   <tbody>
+      <tr ng-repeat="(key,value) in value">
+      <td>{{key}}</td>
+        <td ng-repeat="file in files.files[$parent.$index] track by $index">
+          <span ng-if="value.includes($index)">O</span>
+          <span ng-if="!value.includes($index)">X</span>
+        </td>
+      </tr>
+   </tbody>
+</table>
+</div>
+<div class="col-lg-4">
+<div class="searched-files">
+
+        <div class="form-group">
+
+          <input type="text" ng-model="files.searchTerms" class="form-control" placeholder="Search">
+        </div>
+        <select ng-if="files.fileNames.length" multiple="multiple" ng-model="files.selectedFiles">
+          <option ng-repeat="file in files.fileNames track by $index" value="{{file}}" selected="$index === 0">{{file}}</option>
+        </select>
+        <button type="submit" ng-click="files.search();"class="btn btn-default">Submit</button>
+  <div class="main-box text">datasearch.json </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script type="text/javascript" src="../src/inverted-index.js"> </script>
+<script type="text/javascript" src="../src/app.js"> </script>
+<script type="text/javascript" src="../src/angularjs-multiselect.js"> </script>
+</body>
+</html>
