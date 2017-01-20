@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/gottsohn/inverted-index#readme",
   "dependencies": {
-    "express": "4.14.0",
     "jasmine": "^2.5.3"
   },
   "devDependencies": {
