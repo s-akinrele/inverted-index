@@ -17,7 +17,10 @@ class InvertedIndex {
 
     let isValidStructure = true;
     parseDoc.map(file => {
-      if (!file.title || !file.text){
+      if (!file.title ||
+          typeof file.title !== 'string' ||
+          !file.text ||
+          typeof file.text !== 'string'){
         isValidStructure = false;
       }
     });
@@ -67,7 +70,6 @@ class InvertedIndex {
 search(index,term){
   return this.indices[index][term] ? this.indices[index][term] : [];
 }
-
 }
 
 // extends the array object
@@ -79,3 +81,6 @@ Array.prototype.flatten = function flatten(){
    }
    return flat;
 };
+
+//
+module.exports = InvertedIndex;

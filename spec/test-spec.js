@@ -1,4 +1,5 @@
-
+const InvertedIndex = require('../src/inverted-index.js');
+console.log(InvertedIndex, 'here');
 const docs =[
   {
     "title": "Alice in Wonderland",
@@ -10,9 +11,6 @@ const docs =[
     "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
   }
 ];
-
-
-
 describe('Test suite for Inverted Index', () => {
  const index = new InvertedIndex();
 
