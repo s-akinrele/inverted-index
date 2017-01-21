@@ -1,15 +1,10 @@
 (function(){
-const app = angular.module('inverted-index',['angularjs-dropdown-multiselect']);
-//console.log(InvertedIndex);
-
-app.filter('getLength', function(){
-return function(input){
-  console.dir(input);
-  // return input.length;
-};
+const app = angular.module('inverted-index',['angularjs-dropdown-multiselect'])
+.run(function($rootScope){
+  $rootScope.Utils = {
+    keys: Object.keys
+  };
 });
-
-
 
 app.directive('uploadfile', () => {
   return {
@@ -47,6 +42,7 @@ app.controller('UploadFileController', ['$timeout', '$scope', function($timeout,
   this.myIndex = new InvertedIndex();
   this.selectedFiles = [];
   this.searchTerms = "";
+  this.found ={};
 
   this.createIndex = function(fileIndex){
     const fileName = this.fileNames[fileIndex];
@@ -57,15 +53,18 @@ app.controller('UploadFileController', ['$timeout', '$scope', function($timeout,
     }else{
       alert(result);
     }
-    console.log(this.indices);
   };
 
   this.search = function(){
-    const indices = this.selectedFiles;
-    this.searchTerms = this.searchTerms.split(" ");
+    const indices = this.selectedFiles.length ? this.selectedFiles : Object.keys(this.indices);
+    this.searchTerms = this.searchTerms
+    .replace(/[^A-Za-z0-9\s]/g,'')
+    .toLowerCase()
+    .split(" ");
     const result = this.myIndex.searchIndex(indices,this.searchTerms);
-    console.log(result);
-  }
+    this.found = result;
+    this.searchTerms = "";
+  };
 
   $scope.$watch('files.fileObject', (newVal, oldVal) => {
     if(newVal){
@@ -80,6 +79,7 @@ app.controller('UploadFileController', ['$timeout', '$scope', function($timeout,
         this.files.push(parsedFile);
       this.fileNames.push(newVal.fileName);
       }catch(err){
+        console.log(err);
         alert("Please upload a valid json file");
           return;
       }

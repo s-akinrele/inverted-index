@@ -4,8 +4,8 @@ class InvertedIndex {
    this.errorMessage= "";
   }
 
-  getIndex(){
-    return this.index;
+  getIndex(filename){
+    return this.indices[filename];
   }
 
   validateDoc(parseDoc){
@@ -54,9 +54,10 @@ class InvertedIndex {
   }
 
   searchIndex(indicesParam,...args){
+  indicesParam = indicesParam ? indicesParam : Object.keys(this.indices);
   const result = {};
   const searchTerms = args.flatten();
-  console.log(indicesParam, searchTerms);
+  //console.log(indicesParam, searchTerms);
   for(let searchTerm of searchTerms){
     result[searchTerm] = {};
     for(let index of indicesParam){
@@ -83,4 +84,7 @@ Array.prototype.flatten = function flatten(){
 };
 
 //
-module.exports = InvertedIndex;
+if(typeof module === "object" && module.exports) {
+  module.exports = InvertedIndex;
+}
+

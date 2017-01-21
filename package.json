@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine"
+    "test": "./node_modules/.bin/jasmine",
+    "cover": "istanbul cover node_modules/jasmine/bin/jasmine.js",
+    "send-cov": "coveralls < coverage/lcov.info",
+    "coveralls": "jscoverage lib && YOURPACKAGE_COVERAGE=1 nodeunit --reporter=lcov test | coveralls"
   },
   "repository": {
     "type": "git",
@@ -17,9 +20,12 @@
   },
   "homepage": "https://github.com/gottsohn/inverted-index#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "jasmine": "^2.5.3"
   },
   "devDependencies": {
-    "browser-sync": "^2.18.6"
+    "browser-sync": "^2.18.6",
+    "coveralls": "^2.11.15",
+    "jasmine-node": "^1.14.5"
   }
 }
