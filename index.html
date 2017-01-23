@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <title>Inverted Index</title>
 </head>
 
@@ -26,9 +27,10 @@
                     <div class="card-content">
                         <p>INSTRUCTIONS</p>
                         <ul>
-                            <li>Select a file</li>
-                            <li>Create index</li>
-                            <li>Search for keywords</li>
+                            <li>Select a valid json file</li>
+                            <li>Ensure that the file has title and text</li>
+                            <li>Click on the create index button for each file uploaded</li>
+                            <li>Search for keywords </li>
                         </ul>
                     </div>
                 </div>
@@ -49,7 +51,7 @@
                         </div>
                     </div>
                 </form>
-                <div style="text-align: center;">
+                <div style="">
                     <div ng-repeat="filename in files.fileNames track by $index">
                         <label class="uploads" id="filename">{{filename}}</label>
                         <button type="submit" class="btn index" ng-click="files.createIndex($index)" name="create-index">Create index</button>
@@ -83,20 +85,22 @@
                      <option ng-repeat="file in files.fileNames track by $index" value="{{file}}" selected="$index=== 0">{{file}}</option>
                   </select>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <input type="text" ng-model="files.searchTerms" class="form-control" placeholder="Search">
                 </div>
                 <button ng-disabled="Utils.keys(files.indices).length === 0" type="submit" ng-click="files.search();" class="btn btn-default">Submit</button>
 
-                 <!--Search-->
-                 <div class="card" ng-repeat="(searchTerm,content) in files.found track by $index">
-                   <div class="card-title"><p>{{searchTerm}}</p></div>
-                     <div class="card-content" ng-repeat="(key,value) in content">
-                      <span>{{key}}</span>
-                      <p ng-if="value.length" ng-repeat="item in value">"{{searchTerm}}" was found in Document {{item}}</p>
-                      <p ng-if="!value.length">"{{searchTerm}}" was not found</p>
-                     </div>
-                 </div>
+                <!--Search-->
+                <div class="card" ng-repeat="(searchTerm,content) in files.found track by $index">
+                    <div class="card-title">
+                        <p>{{searchTerm}}</p>
+                    </div>
+                    <div class="card-content" ng-repeat="(key,value) in content">
+                        <span>{{key}}</span>
+                        <p ng-if="value.length" ng-repeat="item in value">"{{searchTerm}}" was found in Document {{item}}</p>
+                        <p ng-if="!value.length">"{{searchTerm}}" was not found</p>
+                    </div>
+                </div>
 
             </div>
             <div>
@@ -105,7 +109,7 @@
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script type="text/javascript" src="src/inverted-index.js">
     </script>
@@ -113,6 +117,7 @@
     </script>
     <script type="text/javascript" src="src/angularjs-multiselect.js">
     </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 </body>
 
 </html>
