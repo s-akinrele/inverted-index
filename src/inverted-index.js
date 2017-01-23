@@ -57,11 +57,9 @@ class InvertedIndex {
         indicesParam = indicesParam ? indicesParam : Object.keys(this.indices);
         const result = {};
         const searchTerms = args.flatten();
-        //console.log(indicesParam, searchTerms);
         for (let searchTerm of searchTerms) {
             result[searchTerm] = {};
             for (let index of indicesParam) {
-                // console.log(index,searchTerm);
                 result[searchTerm][index] = this.search(index, searchTerm);
             }
         }
@@ -82,7 +80,6 @@ Array.prototype.flatten = function flatten() {
     }
     return flat;
 };
-
 
 if (typeof module === "object" && module.exports) {
     module.exports = InvertedIndex;

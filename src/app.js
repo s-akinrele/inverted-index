@@ -13,9 +13,9 @@
             link: (scope, elem, attrs, ngModel) => {
                 if (!ngModel) { return; }
                 elem.bind('change', (event) => {
-                    const isValid = event.target.files[0].name.indexOf(".json") > 0 ;
+                    const isValid = event.target.files[0].name.indexOf(".json") > 0;
                     if (!isValid) {
-                       Materialize.toast('Please upload a valid json file', 4000);
+                        Materialize.toast('Please upload a valid json file', 4000);
                         return;
                     }
 
@@ -52,7 +52,7 @@
             if (typeof result === "object") {
                 this.indices[fileName] = result;
             } else {
-                alert(result);
+                Materialize.toast(result);
             }
         };
 
@@ -79,10 +79,10 @@
                     this.files.push(parsedFile);
                     this.fileNames.push(newVal.fileName);
                 } catch (err) {
-                    if(err.message === 'format'){
-                        Materialize.toast('Please upload a properly formatted file', 4000) ;
-                    }else{
-                        Materialize.toast('Please upload a valid json file', 4000) ;
+                    if (err.message === 'format') {
+                        Materialize.toast('Please upload a properly formatted file', 4000);
+                    } else {
+                        Materialize.toast('Please upload a valid json file', 4000);
                     }
                 }
                 this.fileObject = null;
