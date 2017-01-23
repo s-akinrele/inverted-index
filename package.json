@@ -13,6 +13,10 @@
     "type": "git",
     "url": "git+https://github.com/gottsohn/inverted-index.git"
   },
+  "engines": {
+    "node": "6.9.4",
+    "npm": "3.10.10"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -21,7 +25,9 @@
   "homepage": "https://github.com/gottsohn/inverted-index#readme",
   "dependencies": {
     "dotenv": "^4.0.0",
-    "jasmine": "^2.5.3"
+    "express": "^4.14.0",
+    "jasmine": "^2.5.3",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "browser-sync": "^2.18.6",
