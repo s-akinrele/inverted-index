@@ -30,7 +30,7 @@ const books = {
 describe('Test suite for Inverted Index', () => {
   const index = new InvertedIndex();
   const myIndex = index.createIndex('books.json', books.correct);
-  const newfile = index.createIndex('newfile.json', books.newdoc);
+  index.createIndex('newfile.json', books.newdoc);
   describe('Read book data', () => {
     it('Should confirm that the file is a JSON file', () => {
       expect(index.validateDoc(books.correct)).toBe(true);
@@ -48,14 +48,16 @@ describe('Test suite for Inverted Index', () => {
   });
 
   describe('Populate Index', () => {
-    const mykeys = Object.keys(index.createIndex('books.json', books.correct));
+    const mykeys = Object.keys(myIndex);
 
     it('Should ensure index is created once JSON file has been read', () => {
       expect(typeof myIndex).toBe('object');
+      expect(Array.isArray(myIndex)).toBe(false);
     });
     it('Should ensure index is correct.', () => {
       expect(myIndex.alice).toEqual([0]);
       expect(myIndex.a).toEqual([0, 1]);
+      expect(myIndex.a).not.toEqual([2]);
     });
     it(`Should ensure each object in JSON array 
     contains a property whose value is a string.`, () => {
@@ -64,8 +66,10 @@ describe('Test suite for Inverted Index', () => {
       }
     });
     it('Should ensure index is not overwritten by a new JSON file.', () => {
-      expect(typeof myIndex).toBe('object');
-      expect(typeof newfile).toBe('object');
+      expect(Array.isArray(index.indices['books.json'])).toBe(false);
+      expect(Array.isArray(index.indices['newfile.json'])).toBe(false);
+      expect(typeof index.indices['books.json']).toBe('object');
+      expect(typeof index.indices['newfile.json']).toBe('object');
     });
   });
 
@@ -109,6 +113,7 @@ describe('Test suite for Inverted Index', () => {
     it(`Should ensure getIndex method takes a string
      argument that specifies the location of the JSON data.`, () => {
       const search = index.getIndex('books.json');
+      expect(Array.isArray(search)).toBe(false);
       expect(typeof search).toBe('object');
     });
   });
