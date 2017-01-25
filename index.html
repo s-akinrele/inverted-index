@@ -2,123 +2,119 @@
 <html lang="en" ng-app="inverted-index">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
 
-    <title>Inverted Index</title>
+  <title>Inverted Index</title>
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">INVERTED INDEX </a>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="col s12 m7">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img src="../assets/img/bg.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>INSTRUCTIONS</p>
-                        <ul>
-                            <li>Select a valid json file</li>
-                            <li>Ensure that the file has title and text</li>
-                            <li>Click on the create index button for each file uploaded</li>
-                            <li>Search for keywords </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">INVERTED INDEX </a>
     </div>
-    <div class="row">
-        <div class="" ng-controller="UploadFileController as files">
-            <div class="col s4">
-                <form id='uploadForm' role="form" method="POST" action="" encType="multipart/form-data">
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>Select a file</span>
-                            <input id="fileupload" uploadfile ng-model="files.fileObject" name="fileupload" type="file" accept=".json">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                    </div>
-                </form>
-                <div>
-                    <div class="index" ng-repeat="filename in files.fileNames track by $index">
-                        <label class="uploads" id="filename">{{filename}}</label>
-                        <button type="submit" class="btn index" ng-click="files.createIndex($index)" name="create-index">Create index</button>
-                    </div>
-                </div>
+  </nav>
+  <div class="container">
+    <div class="col s12 m7">
+      <div class="card horizontal">
+        <div class="card-image">
+          <img src="../assets/img/bg.jpg">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>INSTRUCTIONS</p>
+            <ul>
+              <li>Select a valid json file</li>
+              <li>Ensure that the file has title and text</li>
+              <li>Click on the create index button for each file uploaded</li>
+              <li>Search for keywords </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="" ng-controller="UploadFileController as files">
+      <div class="col s4">
+        <form id='uploadForm' role="form" method="POST" action="" encType="multipart/form-data">
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Select a file</span>
+              <input id="fileupload" uploadfile ng-model="files.fileObject" name="fileupload" type="file" accept=".json">
             </div>
-            <div class="col s4">
-                <div class="index-created"></div>
-                <table class="striped" ng-repeat="(key,value) in files.indices track by $index">
-                    <p>{{key}}</p>
-                    <thead>
-                        <tr>
-                            <th>Words</th>
-                            <th ng-repeat="file in files.files[$index] track by $index">Doc {{$index}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="(key,value) in value">
-                            <td>{{key}}</td>
-                            <td ng-repeat="file in files.files[$parent.$index] track by $index">
-                                <span class="teal-text" ng-if="value.includes($index)"><i class="material-icons">check</i></span>
-                                <span class="red-text" ng-if="!value.includes($index)"><i class="material-icons">close</i></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
             </div>
-            <div class="col s4">
-                <div class="input-field">
-                    <select style="display: inline-block;" ng-if="files.fileNames.length" multiple ng-model="files.selectedFiles">
+          </div>
+        </form>
+        <div>
+          <div class="index" ng-repeat="filename in files.fileNames track by $index">
+            <label class="uploads" id="filename">{{filename}}</label>
+            <button type="submit" class="btn index" ng-click="files.createIndex($index)" name="create-index">Create index</button>
+          </div>
+        </div>
+      </div>
+      <div class="col s4">
+        <div class="index-created"></div>
+        <table class="striped index" ng-repeat="(key,value) in files.indices track by $index">
+          <p>{{key}}</p>
+          <thead>
+            <tr>
+              <th>Words</th>
+              <th ng-repeat="file in files.files[$index] track by $index">Doc {{$index}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="(key,value) in value">
+              <td>{{key}}</td>
+              <td ng-repeat="file in files.files[$parent.$index] track by $index">
+                <span class="teal-text" ng-if="value.includes($index)"><i class="material-icons">check</i></span>
+                <span class="red-text" ng-if="!value.includes($index)"><i class="material-icons">close</i></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col s4">
+        <div class="input-field">
+          <select style="display: inline-block;" ng-if="files.fileNames.length" multiple ng-model="files.selectedFiles">
                      <option ng-repeat="file in files.fileNames track by $index" value="{{file}}" selected="$index=== 0">{{file}}</option>
                   </select>
-                </div>
-                <div class="form-group">
-                    <input type="text" ng-model="files.searchTerms" class="form-control" placeholder="Search">
-                </div>
-                <button ng-disabled="Utils.keys(files.indices).length === 0" type="submit" ng-click="files.search();" class="btn btn-default">Submit</button>
-
-                <!--Search-->
-                <div class="card" ng-repeat="(searchTerm,content) in files.found track by $index">
-                    <div class="card-title">
-                        <p>{{searchTerm}}</p>
-                    </div>
-                    <div class="card-content" ng-repeat="(key,value) in content">
-                        <span>{{key}}</span>
-                        <p ng-if="value.length" ng-repeat="item in value">"{{searchTerm}}" was found in Document {{item}}</p>
-                        <p ng-if="!value.length">"{{searchTerm}}" was not found</p>
-                    </div>
-                </div>
-
-            </div>
-            <div>
-            </div>
-
         </div>
-    </div>
+        <div class="form-group">
+          <input type="text" ng-model="files.searchTerms" class="form-control" placeholder="Search">
+        </div>
+        <button ng-disabled="Utils.keys(files.indices).length === 0" type="submit" ng-click="files.search();" class="btn btn-default">Submit</button>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script type="text/javascript" src="src/inverted-index.js">
-    </script>
-    <script type="text/javascript" src="src/app.js">
-    </script>
-    <script type="text/javascript" src="src/angularjs-multiselect.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <!--Search-->
+        <div class="card" ng-repeat="(searchTerm,content) in files.found track by $index">
+          <div class="card-title">
+            <p>{{searchTerm}}</p>
+          </div>
+          <div class="card-content" ng-repeat="(key,value) in content">
+            <span>{{key}}</span>
+            <p ng-if="value.length" ng-repeat="item in value">"{{searchTerm}}" was found in Document {{item}}</p>
+            <p ng-if="!value.length">"{{searchTerm}}" was not found</p>
+          </div>
+        </div>
+
+      </div>
+      <div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+  <script type="text/javascript" src="src/inverted-index.js"></script>
+  <script type="text/javascript" src="src/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 </body>
 
 </html>
