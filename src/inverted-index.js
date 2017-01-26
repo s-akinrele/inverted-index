@@ -115,18 +115,8 @@ class InvertedIndex {
 }
 
 Array.prototype.flatten = function flatten() {
-  let flat = [];
-  for (let i = 0, l = this.length; i < l; i++) {
-    const type = Object.prototype.toString
-      .call(this[i]).split(' ').pop().split(']')
-      .shift()
-      .toLowerCase();
-    if (type) {
-      flat = flat.concat(/^(array|collection|arguments|object)$/
-        .test(type) ? flatten.call(this[i]) : this[i]);
-    }
-  }
-  return flat;
+  return this.toString().split(',').map(item =>
+    item.toLowerCase());
 };
 
 if (typeof module === 'object' && module.exports) {
